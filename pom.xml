@@ -10,7 +10,7 @@
     </parent>
     <groupId>emg.springframework.sfgpetclinic</groupId>
     <artifactId>sfg-pet-clinic</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>sfg-pet-clinic</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
@@ -40,6 +40,6 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:petrubear/sfg-pet-clinic.git</developerConnection>
-        <tag>sfg-pet-clinic-0.0.3</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
