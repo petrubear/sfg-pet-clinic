@@ -28,7 +28,7 @@ public class DataLoader implements CommandLineRunner {
         owner1.setLastName("Weston");
 
         var owner2 = new Owner();
-        owner2.setId(1L);
+        owner2.setId(2L);
         owner2.setFirstName("Fiona");
         owner2.setLastName("Glennane");
 
@@ -43,7 +43,7 @@ public class DataLoader implements CommandLineRunner {
         vet1.setLastName("Axe");
 
         var vet2 = new Vet();
-        vet2.setId(1L);
+        vet2.setId(2L);
         vet2.setFirstName("Jessie");
         vet2.setLastName("Porter");
 
