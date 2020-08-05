@@ -3,8 +3,11 @@ package emg.springframework.sfgpetclinic.model;
 import java.time.LocalDate;
 
 public class Pet extends BaseEntity {
+
     private PetType petType;
+
     private Person owner;
+
     private LocalDate birthday;
 
     public PetType getPetType() {
@@ -30,4 +33,5 @@ public class Pet extends BaseEntity {
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
+
 }

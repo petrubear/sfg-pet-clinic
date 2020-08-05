@@ -12,18 +12,18 @@ import java.util.Set;
 @Controller
 public class VetController {
 
-    private final VetService vetService;
+	private final VetService vetService;
 
-    @Autowired
-    public VetController(VetService vetService) {
-        this.vetService = vetService;
-    }
+	@Autowired
+	public VetController(VetService vetService) {
+		this.vetService = vetService;
+	}
 
+	@RequestMapping( {"/vets", "/vets/index", "/vets/index.html"})
+	public String listVets(Model model) {
+		Set<Vet> vets = vetService.findAll();
+		model.addAttribute("vets", vets);
+		return "vets/index";
+	}
 
-    @RequestMapping( {"/vets", "/vets/index", "/vets/index.html"})
-    public String listVets(Model model) {
-        Set<Vet> vets = vetService.findAll();
-        model.addAttribute("vets", vets);
-        return "vets/index";
-    }
 }

@@ -1,7 +1,9 @@
 package emg.springframework.sfgpetclinic.model;
 
 public class Person extends BaseEntity {
+
     private String firstName;
+
     private String lastName;
 
     public String getFirstName() {
@@ -19,4 +21,5 @@ public class Person extends BaseEntity {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }

@@ -11,41 +11,43 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private final OwnerService ownerService;
-    private final VetService vetService;
+	private final OwnerService ownerService;
 
-    @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService) {
-        this.ownerService = ownerService;
-        this.vetService = vetService;
-    }
+	private final VetService vetService;
 
-    @Override
-    public void run(String... args) throws Exception {
-        var owner1 = new Owner();
-        owner1.setFirstName("Michael");
-        owner1.setLastName("Weston");
+	@Autowired
+	public DataLoader(OwnerService ownerService, VetService vetService) {
+		this.ownerService = ownerService;
+		this.vetService = vetService;
+	}
 
-        var owner2 = new Owner();
-        owner2.setFirstName("Fiona");
-        owner2.setLastName("Glennane");
+	@Override
+	public void run(String... args) throws Exception {
+		var owner1 = new Owner();
+		owner1.setFirstName("Michael");
+		owner1.setLastName("Weston");
 
-        ownerService.save(owner1);
-        ownerService.save(owner2);
+		var owner2 = new Owner();
+		owner2.setFirstName("Fiona");
+		owner2.setLastName("Glennane");
 
-        System.out.println("loaded owners...");
+		ownerService.save(owner1);
+		ownerService.save(owner2);
 
-        var vet1 = new Vet();
-        vet1.setFirstName("Sam");
-        vet1.setLastName("Axe");
+		System.out.println("loaded owners...");
 
-        var vet2 = new Vet();
-        vet2.setFirstName("Jessie");
-        vet2.setLastName("Porter");
+		var vet1 = new Vet();
+		vet1.setFirstName("Sam");
+		vet1.setLastName("Axe");
 
-        vetService.save(vet1);
-        vetService.save(vet2);
+		var vet2 = new Vet();
+		vet2.setFirstName("Jessie");
+		vet2.setLastName("Porter");
 
-        System.out.println("loaded vets...");
-    }
+		vetService.save(vet1);
+		vetService.save(vet2);
+
+		System.out.println("loaded vets...");
+	}
+
 }
