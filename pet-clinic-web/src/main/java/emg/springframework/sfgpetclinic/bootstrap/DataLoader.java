@@ -1,11 +1,9 @@
 package emg.springframework.sfgpetclinic.bootstrap;
 
-import emg.springframework.sfgpetclinic.model.Owner;
-import emg.springframework.sfgpetclinic.model.Pet;
-import emg.springframework.sfgpetclinic.model.PetType;
-import emg.springframework.sfgpetclinic.model.Vet;
+import emg.springframework.sfgpetclinic.model.*;
 import emg.springframework.sfgpetclinic.services.OwnerService;
 import emg.springframework.sfgpetclinic.services.PetTypeService;
+import emg.springframework.sfgpetclinic.services.SpecialityService;
 import emg.springframework.sfgpetclinic.services.VetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,19 +19,27 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final PetTypeService petTypeService;
     private final VetService vetService;
+    private final SpecialityService specialityService;
 
     private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
 
     @Autowired
-    public DataLoader(OwnerService ownerService, PetTypeService petTypeService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, PetTypeService petTypeService, VetService vetService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.petTypeService = petTypeService;
         this.vetService = vetService;
+        this.specialityService = specialityService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        var count = petTypeService.findAll().size();
+        if (count == 0) {
+            loadData();
+        }
+    }
 
+    private void loadData() {
         var dog = new PetType();
         dog.setName("Dog");
         var dogType = petTypeService.save(dog);
@@ -72,14 +78,26 @@ public class DataLoader implements CommandLineRunner {
 
         logger.info("Loaded owners...");
 
+        var radiology = new Speciality();
+        radiology.setDescription("Radiology");
+        var savedRadiology = specialityService.save(radiology);
+        var surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        var savedSurgery = specialityService.save(surgery);
+        var dentistry = new Speciality();
+        dentistry.setDescription("dentistry");
+        var savedDentristry = specialityService.save(dentistry);
 
         var vet1 = new Vet();
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
+        vet1.getSpecialities().add(radiology);
+        vet1.getSpecialities().add(dentistry);
 
         var vet2 = new Vet();
         vet2.setFirstName("Jessie");
         vet2.setLastName("Porter");
+        vet2.getSpecialities().add(surgery);
 
         vetService.save(vet1);
         vetService.save(vet2);
