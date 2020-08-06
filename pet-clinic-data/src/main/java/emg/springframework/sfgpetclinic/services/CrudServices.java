@@ -4,14 +4,14 @@ import java.util.Set;
 
 public interface CrudServices<T, ID> {
 
-    Set<T> findAll();
+	Set<T> findAll();
 
-    T findById(ID id);
+	T findById(ID id);
 
-    T save(T element);
+	T save(T element);
 
-    void delete(T element);
+	void delete(T element);
 
-    void deleteById(ID id);
+	void deleteById(ID id);
 
 }
