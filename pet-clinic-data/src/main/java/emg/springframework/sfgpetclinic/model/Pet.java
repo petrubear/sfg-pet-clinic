@@ -2,11 +2,14 @@ package emg.springframework.sfgpetclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
 public class Pet extends NamedEntity {
-
+    @ManyToOne
+    @JoinColumn(name = "type_id")
     private PetType petType;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -16,8 +19,10 @@ public class Pet extends NamedEntity {
     @Column(name = "birth_fate")
     private LocalDate birthday;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
+    @OneToMany(cascade = CascadeType.ALL,
+        mappedBy = "pet")
+    private Set<Visit> visits = new HashSet<>();
+
     public PetType getPetType() {
         return petType;
     }
@@ -26,7 +31,7 @@ public class Pet extends NamedEntity {
         this.petType = petType;
     }
 
-    public Person getOwner() {
+    public Owner getOwner() {
         return owner;
     }
 
