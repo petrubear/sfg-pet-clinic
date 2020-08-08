@@ -1,10 +1,7 @@
 package emg.springframework.sfgpetclinic.bootstrap;
 
 import emg.springframework.sfgpetclinic.model.*;
-import emg.springframework.sfgpetclinic.services.OwnerService;
-import emg.springframework.sfgpetclinic.services.PetTypeService;
-import emg.springframework.sfgpetclinic.services.SpecialityService;
-import emg.springframework.sfgpetclinic.services.VetService;
+import emg.springframework.sfgpetclinic.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +17,17 @@ public class DataLoader implements CommandLineRunner {
     private final PetTypeService petTypeService;
     private final VetService vetService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
     private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
 
     @Autowired
-    public DataLoader(OwnerService ownerService, PetTypeService petTypeService, VetService vetService, SpecialityService specialityService) {
+    public DataLoader(OwnerService ownerService, PetTypeService petTypeService, VetService vetService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.petTypeService = petTypeService;
         this.vetService = vetService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -47,36 +46,46 @@ public class DataLoader implements CommandLineRunner {
         cat.setName("Cat");
         var catType = petTypeService.save(cat);
 
-        var owner1 = new Owner();
-        owner1.setFirstName("Michael");
-        owner1.setLastName("Weston");
-        owner1.setAddress("123 BlaBla");
-        owner1.setCity("Miami");
-        owner1.setTelephone("00123444556");
+        var mike = new Owner();
+        mike.setFirstName("Michael");
+        mike.setLastName("Weston");
+        mike.setAddress("123 BlaBla");
+        mike.setCity("Miami");
+        mike.setTelephone("00123444556");
 
         var mikesPet = new Pet();
         mikesPet.setPetType(dog);
-        mikesPet.setOwner(owner1);
+        mikesPet.setOwner(mike);
         mikesPet.setName("Rosco");
         mikesPet.setBirthday(LocalDate.now());
+        mike.getPets().add(mikesPet);
 
-        var owner2 = new Owner();
-        owner2.setFirstName("Fiona");
-        owner2.setLastName("Glennane");
-        owner2.setAddress("345 StoreStrt");
-        owner2.setCity("Washington");
-        owner2.setTelephone("00122442353");
+        var fiona = new Owner();
+        fiona.setFirstName("Fiona");
+        fiona.setLastName("Glennane");
+        fiona.setAddress("345 StoreStrt");
+        fiona.setCity("Washington");
+        fiona.setTelephone("00122442353");
 
         var fionasPet = new Pet();
         fionasPet.setPetType(cat);
-        fionasPet.setOwner(owner2);
+        fionasPet.setOwner(fiona);
         fionasPet.setName("Fluffy");
         fionasPet.setBirthday(LocalDate.now());
+        fiona.getPets().add(fionasPet);
 
-        ownerService.save(owner1);
-        ownerService.save(owner2);
+        ownerService.save(mike);
+        ownerService.save(fiona);
 
         logger.info("Loaded owners...");
+
+        var catVisit = new Visit();
+        catVisit.setPet(fionasPet);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy Kitty");
+        visitService.save(catVisit);
+
+        logger.info("Loaded visits...");
 
         var radiology = new Speciality();
         radiology.setDescription("Radiology");
@@ -104,5 +113,4 @@ public class DataLoader implements CommandLineRunner {
 
         logger.info("Loaded vets...");
     }
-
 }
