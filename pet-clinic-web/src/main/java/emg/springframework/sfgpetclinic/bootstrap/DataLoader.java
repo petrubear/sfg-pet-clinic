@@ -2,14 +2,14 @@ package emg.springframework.sfgpetclinic.bootstrap;
 
 import emg.springframework.sfgpetclinic.model.*;
 import emg.springframework.sfgpetclinic.services.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -18,8 +18,6 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
-
-    private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
 
     @Autowired
     public DataLoader(OwnerService ownerService, PetTypeService petTypeService, VetService vetService, SpecialityService specialityService, VisitService visitService) {
@@ -77,7 +75,7 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(mike);
         ownerService.save(fiona);
 
-        logger.info("Loaded owners...");
+        log.info("Loaded owners...");
 
         var catVisit = new Visit();
         catVisit.setPet(fionasPet);
@@ -85,7 +83,7 @@ public class DataLoader implements CommandLineRunner {
         catVisit.setDescription("Sneezy Kitty");
         visitService.save(catVisit);
 
-        logger.info("Loaded visits...");
+        log.info("Loaded visits...");
 
         var radiology = new Speciality();
         radiology.setDescription("Radiology");
@@ -111,6 +109,6 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet1);
         vetService.save(vet2);
 
-        logger.info("Loaded vets...");
+        log.info("Loaded vets...");
     }
 }
