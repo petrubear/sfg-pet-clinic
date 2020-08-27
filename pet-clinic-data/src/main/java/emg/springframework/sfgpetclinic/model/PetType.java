@@ -1,15 +1,23 @@
 package emg.springframework.sfgpetclinic.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "types")
 public class PetType extends NamedEntity {
+    @Builder
+    public PetType(Long id, String name) {
+        super(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
